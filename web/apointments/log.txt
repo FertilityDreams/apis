@@ -1,0 +1,116 @@
+[2025-04-27 23:14:52] {
+    "fullName": "Stiven Gordillo Ruiz",
+    "email": "test@stivengordillo.com",
+    "phone": "+573114784747",
+    "countryPhoneIso": "co",
+    "appointmentId": "4091a4a37a-1749",
+    "created": "2025-04-27 18:14:48",
+    "calendar": "https:\/\/teams.microsoft.com\/l\/meetup-join\/19%3ameeting_MTI3ZTBmMGMtMjlkMy00YjU4LThlMWUtZjY4OTdkNDcyMzBl%40thread.v2\/0?context=%7b%22Tid%22%3a%22216242ae-e801-4df9-a307-2bd2c8e220bc%22%2c%22Oid%22%3a%229d03cbe1-ac53-43c7-a5c0-beb0a1ee7c83%22%7d",
+    "start": "2025-05-05 09:00:00",
+    "aditionalPeople": 1,
+    "custom": [
+        {
+            "label": "campaing",
+            "type": "text",
+            "value": "campaña"
+        },
+        {
+            "label": "medium",
+            "type": "text",
+            "value": "medium"
+        },
+        {
+            "label": "source",
+            "type": "text",
+            "value": "source"
+        },
+        {
+            "label": "rel",
+            "type": "text",
+            "value": "rel"
+        },
+        {
+            "label": "Quiero que me contacten por",
+            "type": "select",
+            "value": "Telegram"
+        },
+        {
+            "label": "Info adicional",
+            "type": "text-area",
+            "value": "quiero más info"
+        },
+        {
+            "label": "Datos personales",
+            "type": "checkbox",
+            "value": [
+                "Acepto el tratamiento de mis datos según las políticas de tratamiento de información de Fertility Dreams"
+            ]
+        },
+        {
+            "label": "Instagram",
+            "type": "text",
+            "value": "stiveng"
+        },
+        {
+            "label": "Linkedin",
+            "type": "text",
+            "value": "stiveng"
+        }
+    ]
+}
+[2025-04-28 02:09:24] {
+    "fullName": "Wilfrido Vargas",
+    "email": "tevolcist@stivengordillo.com",
+    "phone": "+573124228947",
+    "countryPhoneIso": "co",
+    "appointmentId": "d1f6f8bdd2-1750",
+    "custom": [
+        {
+            "label": "campaing",
+            "type": "text",
+            "value": "heterosexuales"
+        },
+        {
+            "label": "medium",
+            "type": "text",
+            "value": "instagram"
+        },
+        {
+            "label": "source",
+            "type": "text",
+            "value": "video"
+        },
+        {
+            "label": "rel",
+            "type": "text",
+            "value": "n\/a"
+        },
+        {
+            "label": "Quiero que me contacten por",
+            "type": "select",
+            "value": "Whatsapp"
+        },
+        {
+            "label": "Info adicional",
+            "type": "text-area",
+            "value": "necesito saber más sobre este tipo de tratamientos"
+        },
+        {
+            "label": "Datos personales",
+            "type": "checkbox",
+            "value": [
+                "Acepto el tratamiento de mis datos según las políticas de tratamiento de información de Fertility Dreams"
+            ]
+        },
+        {
+            "label": "Instagram",
+            "type": "text",
+            "value": "stivengIH"
+        },
+        {
+            "label": "Linkedin",
+            "type": "text",
+            "value": "LinkedinLK"
+        }
+    ]
+}

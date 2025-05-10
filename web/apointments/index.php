@@ -15,6 +15,7 @@
 
     $customer = $data['appointment']['bookings'][0]['customer'] ?? [];
     $custom   = $data['appointment']['bookings'][0]['customFields'] ?? [];
+    $count = count($custom);
 
     $firstName       = $customer['firstName'] ?? '';
     $lastName        = $customer['lastName'] ?? '';
@@ -30,45 +31,27 @@
 
     $fullName = trim($firstName . ' ' . $lastName);
     $newToken = $token . '-' . $appointmentId;
-
-    // Armamos objeto principal
+    $newDataCustom = json_encode($custom, JSON_PRETTY_PRINT | JSON_UNESCAPED_UNICODE);
     $newData->fullName         = $fullName;
     $newData->email            = $email;
     $newData->phone            = $phone;
     $newData->countryPhoneIso  = $countryPhoneIso;
     $newData->appointmentId    = $newToken;
-    $newData->created          = $created;
-    $newData->calendar         = $calendar;
-    $newData->start            = $start;
-    $newData->aditionalPeople  = $data['appointment']['notifyParticipants'] ?? [];
-
-    // Procesamos campos personalizados
-    foreach ($custom as $field) {
-        $pushObjName = $field['label'] ?? '';
-        $pushObjVal  = $field['value'] ?? '';
-
-        if (in_array($pushObjName, [
-            "Quiero que me contacten por", 
-            "I want to be contacted about", 
-            "Je veux qu’on me contacte à propos de"
-        ])) {
-            $pushObjName = "contactForm";
-        }
-
-        $sanitizedKey = preg_replace('/[^a-zA-Z0-9_]/', '_', $pushObjName);
-        $newData->$sanitizedKey = $pushObjVal;
-    }
-
+    $newData->custom           = $custom;
     $startDateTime = $start; 
     $dateOnly = substr($startDateTime, 0, 10);
     $timeOnly = substr($startDateTime, 11);
     $documents = new stdClass();
     $dateData[$dateOnly] = (object)[
-        'titleAppointment' => $data['appointment']['service']['name'] ?? '',
+        'titleAppointment'  => $data['appointment']['service']['name'] ?? '',
         'people'            => $data['appointment']['notifyParticipants'] ?? [],
         'time'              => $timeOnly,
         'insights'          => "",
-        'documents'         => $documents 
+        'documents'         => $documents,
+        'calendar'          => $calendar,
+        'start'             => $start,
+        'status'            => 1,
+        'observations'      => $custom[5],
     ];
     $lead_basicInfo = json_encode($newData, JSON_UNESCAPED_UNICODE);
     if ($lead_basicInfo === false) {
@@ -84,7 +67,7 @@
     $lead_processID = $newToken;
     $lead_status    = 1;
 
-    $stmt = $conn->prepare("INSERT INTO ft_crm_leads (lead_id, lead_basicInfo, lead_appointments, lead_processID, lead_status) VALUES (?, ?, ?, ?, ?)");
+    $stmt = $conn->prepare("INSERT INTO ft_crm_leads (lead_id, lead_basicInfo, lead_email,  lead_appointments, lead_processID, lead_status) VALUES (?, ?, ?, ?, ?, ?)");
 
     $logPath = __DIR__ . '/log.txt';
 
@@ -95,10 +78,11 @@
         exit;
     }
 
-    $stmt->bind_param("ssssi", $lead_id, $lead_basicInfo, $lead_appointments, $lead_processID, $lead_status);
+    $stmt->bind_param("sssssi", $lead_id, $lead_basicInfo, $email, $lead_appointments, $lead_processID, $lead_status);
 
     if ($stmt->execute()) {
-        file_put_contents($logPath, "[" . date('Y-m-d H:i:s') . "] Guardo correctamente." . PHP_EOL, FILE_APPEND);
+        $newDataJson = json_encode($newData, JSON_PRETTY_PRINT | JSON_UNESCAPED_UNICODE);
+        file_put_contents($logPath, "[" . date('Y-m-d H:i:s') . "] " . $newDataJson . PHP_EOL, FILE_APPEND);
         echo json_encode(['status' => 'success', 'message' => 'Lead guardado correctamente']);
     } else {
         file_put_contents($logPath, "[" . date('Y-m-d H:i:s') . "] Error al ejecutar: " . $stmt->error . PHP_EOL, FILE_APPEND);
